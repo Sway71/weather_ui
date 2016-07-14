@@ -4,7 +4,7 @@ var Button = React.createClass({
 
 	render() {
 		return (
-			<div style={styles.button} onClick={this.props.action}>
+			<div className="action-button" style={styles.button} onClick={this.props.action}>
 				{this.props.name}
 			</div>
 		);

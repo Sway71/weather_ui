@@ -64,7 +64,8 @@ var Home = React.createClass({
 				"address": address,
 			}
 		}).done( (results, error) => {
-			this.setState({ currentWeather: null, dailyWeather: results.daily });
+			
+			this.setState({ currentWeather: null, dailyWeather: results.daily.data });
 			if (result.alerts) {
 				this.setState({ alerts: result.alerts });
 			}
@@ -86,7 +87,13 @@ var Home = React.createClass({
 				<input className="address-input" style={this.styles.input} type="text" placeholder="Type address here..." />
 				<Button name="Get Current Weather!" action={this.getWeather} />
 				<Button name="Get Forecast!" action={this.getForecast} />
-				<div className="search-output">{output}</div>
+				<div className="search-output" style={this.styles.output}>
+					<CurrentWeather weather={this.state.currentWeather} />
+
+					{this.state.dailyWeather.map( (dayWeather, index) => {
+						return <Forecast key={"day-weather-" + index} weather={dayWeather} />;
+					})}
+				</div>
 			</div>
 		);
 	},
@@ -101,6 +108,11 @@ var Home = React.createClass({
 			borderRadius: "5px",
 			border: "solid 3px",
 			fontSize: "15px"
+		},
+
+		output: {
+			padding: "10px",
+			
 		}
 	}
 });
