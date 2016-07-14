@@ -1,0 +1,2 @@
+
+Simply run "npm install" in the directory and assign the environment variables FORECAST_API_KEY and GOOGLE_API_KEY, and everything should work smoothly (assuming you have the latest version of Node installed).
