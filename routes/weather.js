@@ -8,12 +8,12 @@ var oboe = require('oboe');
 router.post('/current', function(req, res, next) {
 	var address = req.body.address;
 	var query = address.split(' ').join('+');
-	var queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=AIzaSyDIxW1qYcyK5sKT0WZ3-Xiom1dbpQGEgpg";
+	var queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=" + process.env.GOOGLE_API_KEY;
 	
 	oboe(queryUrl).done((results) => {
 		console.log("got google response");
 		var location = results.results[0].geometry.location;
-		var weatherQueryUrl = "https://api.forecast.io/forecast/174984b8a9e2e4ce7feae0b76635b531/" + location.lat + ',' + location.lng;
+		var weatherQueryUrl = "https://api.forecast.io/forecast/" + process.env.FORECAST_API_KEY + "/" + location.lat + ',' + location.lng;
 		oboe(weatherQueryUrl).done((weather) => {
 			res.json(weather);
 		});
@@ -25,10 +25,10 @@ router.post('/forecast', function(req, res, next) {
 	var result = "";
 	var address = req.body.address;
 	var query = address.split(' ').join('+');
-	var queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key=AIzaSyDIxW1qYcyK5sKT0WZ3-Xiom1dbpQGEgpg";
+	var queryUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query + "&key="process.env.GOOGLE_API_KEY;
 	oboe(queryUrl).done((results) => {
 		var location = results.results[0].geometry.location;
-		var weatherQueryUrl = "https://api.forecast.io/forecast/174984b8a9e2e4ce7feae0b76635b531/" + location.lat + ',' + location.lng;
+		var weatherQueryUrl = "https://api.forecast.io/forecast/" + process.env.FORECAST_API_KEY + "/" + location.lat + ',' + location.lng;
 		oboe(weatherQueryUrl).done((weather) => {
 			res.json(weather);
 		});
